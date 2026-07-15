@@ -12,7 +12,9 @@ class BahanBakuController extends Controller
      */
     public function index()
     {
-        //
+        $bahan = BahanBaku::all();
+
+        return view('bahan_baku.index', compact('bahan'));
     }
 
     /**

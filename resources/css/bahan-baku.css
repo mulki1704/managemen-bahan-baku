@@ -1,0 +1,300 @@
+/* ===========================
+   HEADER
+=========================== */
+
+.page-header {
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+
+}
+
+.title h2 {
+
+    font-size: 38px;
+    font-weight: 700;
+    color: #1E2A47;
+
+}
+
+.title p {
+
+    color: #7b7b7b;
+    margin-top: 6px;
+
+}
+
+/* ===========================
+   BUTTON
+=========================== */
+
+.btn-primary {
+
+    background: #1E2A47;
+    color: white;
+    text-decoration: none;
+
+    padding: 1px 24px;
+
+    border-radius: 10px;
+
+    font-weight: 600;
+
+    transition: .3s;
+
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+}
+.toolbar-action {
+    margin-top: 28px;
+}
+
+.btn-primary:hover {
+
+    background: #2f4168;
+
+    transform: translateY(-2px);
+
+}
+
+/* =======================
+   Toolbar
+======================= */
+
+.toolbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin: 20px 0;
+}
+.toolbar-action {
+    display: flex;
+    align-items: flex-end;
+}
+/* ===========================
+   SEARCH
+=========================== */
+
+.search-section {
+    display: flex;
+    flex-direction: column;
+}
+
+.search-label {
+
+    display: block;
+
+    font-size: 15px;
+
+    font-weight: 600;
+
+    color: #1E2A47;
+
+    margin-bottom: 10px;
+
+}
+
+.search-form {
+    display: flex;
+    gap: 10px;
+}
+.search-form input {
+
+    flex: 1;
+
+    height: 46px;
+
+    padding: 0 15px;
+
+    border: 1px solid #d9d9d9;
+
+    border-radius: 10px;
+
+    outline: none;
+
+    font-size: 14px;
+
+}
+
+.search-form input:focus {
+
+    border-color: #1E2A47;
+
+    box-shadow: 0 0 8px rgba(30, 42, 71, .15);
+
+}
+
+.search-form button {
+
+    height: 46px;
+
+    padding: 0 22px;
+
+    background: #1E2A47;
+
+    color: white;
+
+    border: none;
+
+    border-radius: 10px;
+
+    cursor: pointer;
+
+    font-weight: 600;
+
+    transition: .3s;
+
+}
+
+.search-form button:hover {
+
+    background: #2f4168;
+
+}
+
+
+
+/* ===========================
+   TABLE
+=========================== */
+
+.table-container {
+
+    background: white;
+
+    border-radius: 18px;
+
+    padding: 25px;
+
+    box-shadow: 0 10px 30px rgba(0, 0, 0, .08);
+
+}
+
+.custom-table {
+
+    width: 100%;
+
+    border-collapse: collapse;
+
+}
+
+.custom-table thead {
+
+    background: #1E2A47;
+
+    color: white;
+
+}
+
+.custom-table th {
+
+    padding: 16px;
+
+    font-size: 14px;
+
+}
+
+.custom-table td {
+
+    padding: 16px;
+
+    border-bottom: 1px solid #ececec;
+
+}
+
+.custom-table tbody tr:hover {
+
+    background: #f5f8ff;
+
+}
+
+/* ===========================
+   STATUS
+=========================== */
+
+.status {
+
+    padding: 7px 14px;
+
+    border-radius: 20px;
+
+    font-size: 13px;
+
+    color: white;
+
+    font-weight: 600;
+
+}
+
+.success {
+
+    background: #2ecc71;
+
+}
+
+.warning {
+
+    background: #f1c40f;
+
+    color: black;
+
+}
+
+.danger {
+
+    background: #e74c3c;
+
+}
+
+/* ===========================
+   BUTTON AKSI
+=========================== */
+
+.action-button {
+
+    display: flex;
+
+    justify-content: center;
+
+    gap: 8px;
+
+}
+
+.action-button a,
+.action-button button {
+
+    border: none;
+
+    padding: 8px 14px;
+
+    border-radius: 8px;
+
+    color: white;
+
+    cursor: pointer;
+
+    text-decoration: none;
+
+}
+
+.btn-detail {
+
+    background: #3498db;
+
+}
+
+.btn-edit {
+
+    background: #f39c12;
+
+}
+
+.btn-delete {
+
+    background: #e74c3c;
+
+}
