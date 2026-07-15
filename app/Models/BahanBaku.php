@@ -7,7 +7,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class BahanBaku extends Model
 {
-   protected $fillable = [
+   
+protected $table = 'bahan_bakus';
+
+protected $fillable = [
     'kode_bahan',
     'nama_bahan',
     'kategori',
@@ -16,5 +19,6 @@ class BahanBaku extends Model
     'stok_minimum',
     'harga',
 ];
+
 
 }
