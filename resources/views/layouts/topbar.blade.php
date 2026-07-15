@@ -1,8 +1,8 @@
-<<<<<<< HEAD
+
   {{-- <header class="topbar">
 =======
   <header class="topbar">
->>>>>>> 35f6a3efca5930056b8f5c047590ae1f4378037a
+
     <button class="hamburger" id="hamburgerBtn" aria-label="Buka menu">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
     </button>
@@ -24,7 +24,5 @@
     </button>
 <<<<<<< HEAD
   </header> --}}
-=======
-  </header>
->>>>>>> 35f6a3efca5930056b8f5c047590ae1f4378037a
+
 
