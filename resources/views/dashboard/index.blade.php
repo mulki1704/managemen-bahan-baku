@@ -1,5 +1,5 @@
 
-<<<<<<< HEAD
+
  @extends('layouts.app')
 
 @section('title','Dashboard')
@@ -13,9 +13,9 @@ Dashboard
 @endsection
 
 @section('content')
-=======
 
->>>>>>> 35f6a3efca5930056b8f5c047590ae1f4378037a
+
+
         <section class="panel-grid">
       <div class="panel">
         <div class="panel-head">
@@ -105,25 +105,5 @@ Dashboard
         </div>
       </div>
     </section>
-
-<<<<<<< HEAD
-   
-=======
-    @extends('layouts.app')
-
-@section('title','Dashboard')
-
-@section('page-title','Dashboard')
-
-@section('breadcrumb')
-
-Dashboard
-
-@endsection
-
-@section('content')
->>>>>>> 35f6a3efca5930056b8f5c047590ae1f4378037a
-
-<!-- seluruh isi dashboard -->
 
 @endsection
