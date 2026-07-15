@@ -12,8 +12,9 @@ class JadwalProduksiController extends Controller
      */
     public function index()
     {
-        $jadwalProduksis = JadwalProduksi::all();
-        return view('jadwal-produksi.index', compact('jadwalProduksis'));
+        $jadwalProduksi = JadwalProduksi::all();
+
+        return view('jadwal-produksi.index', compact('jadwalProduksi'));
     }
 
     /**
@@ -29,9 +30,21 @@ class JadwalProduksiController extends Controller
      */
     public function store(Request $request)
     {
-        JadwalProduksi::create($request->all());
+    $lastId = JadwalProduksi::max('id') + 1;
 
-        return redirect()
+    $kode = 'JP-' . str_pad($lastId, 3, '0', STR_PAD_LEFT);
+
+    JadwalProduksi::create([
+        'kode_jadwal'      => $kode,
+        'produk_id'        => $request->produk_id,
+        'qty_produksi'     => $request->qty_produksi,
+        'tanggal_mulai'    => $request->tanggal_mulai,
+        'tanggal_selesai'  => $request->tanggal_selesai,
+        'status'           => $request->status,
+        'catatan'          => $request->catatan,
+    ]);
+
+    return redirect()
         ->route('jadwal-produksi.index')
         ->with('success', 'Jadwal Produksi berhasil ditambahkan.');
     }
@@ -41,16 +54,15 @@ class JadwalProduksiController extends Controller
      */
     public function show(JadwalProduksi $jadwalProduksi)
     {
-        //
+        return view('jadwal-produksi.show', compact('jadwalProduksi'));
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit($id)
+    public function edit(JadwalProduksi $jadwalProduksi)
     {
-        $jadwal = JadwalProduksi::findOrFail(($id));
-        return view('jadwal-produksi.edit', compact('jadwal'));
+        return view('jadwal-produksi.edit', compact('jadwalProduksi'));
     }
 
     /**
@@ -58,11 +70,11 @@ class JadwalProduksiController extends Controller
      */
     public function update(Request $request, JadwalProduksi $jadwalProduksi)
     {
-        $jadwal = JadwalProduksi::findOrFail($jadwalProduksi->id);  
-        $jadwal->update($request->all());
+        $jadwalProduksi->update($request->all());
+
         return redirect()
-        ->route('jadwal-produksi.index')
-        ->with('success', 'Jadwal Produksi berhasil diperbarui.');
+            ->route('jadwal-produksi.index')
+            ->with('success', 'Jadwal Produksi berhasil diperbarui.');
     }
 
     /**
@@ -70,10 +82,10 @@ class JadwalProduksiController extends Controller
      */
     public function destroy(JadwalProduksi $jadwalProduksi)
     {
-        jadwalProduksi::destroy($jadwalProduksi->id);
-        
+        $jadwalProduksi->delete();
+
         return redirect()
-        ->route('jadwal-produksi.index')
-        ->with('success', 'Jadwal Produksi berhasil dihapus.');
+            ->route('jadwal-produksi.index')
+            ->with('success', 'Jadwal Produksi berhasil dihapus.');
     }
 }
