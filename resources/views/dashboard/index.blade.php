@@ -1,5 +1,17 @@
 
+ @extends('layouts.app')
 
+@section('title','Dashboard')
+
+@section('page-title','Dashboard')
+
+@section('breadcrumb')
+
+Dashboard
+
+@endsection
+
+@section('content')
         <section class="panel-grid">
       <div class="panel">
         <div class="panel-head">
@@ -90,19 +102,7 @@
       </div>
     </section>
 
-    @extends('layouts.app')
-
-@section('title','Dashboard')
-
-@section('page-title','Dashboard')
-
-@section('breadcrumb')
-
-Dashboard
-
-@endsection
-
-@section('content')
+   
 
 <!-- seluruh isi dashboard -->
 

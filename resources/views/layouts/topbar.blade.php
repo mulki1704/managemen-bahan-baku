@@ -1,4 +1,4 @@
-  <header class="topbar">
+  {{-- <header class="topbar">
     <button class="hamburger" id="hamburgerBtn" aria-label="Buka menu">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
     </button>
@@ -18,5 +18,5 @@
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 5v14M5 12h14"/></svg>
       Tambah Bahan Baku
     </button>
-  </header>
+  </header> --}}
 
