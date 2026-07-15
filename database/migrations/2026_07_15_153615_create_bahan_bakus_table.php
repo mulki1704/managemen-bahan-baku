@@ -13,7 +13,16 @@ return new class extends Migration
     {
         Schema::create('bahan_bakus', function (Blueprint $table) {
             $table->id();
+            $table->string('kode_bahan')->unique();
+            $table->string('nama_bahan');
+            $table->string('kategori');
+            $table->string('satuan');
+            $table->integer('stok');
+            $table->integer('stok_minimum');
+            $table->decimal('harga', 15, 2);
             $table->timestamps();
+
+
         });
     }
 
