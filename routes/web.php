@@ -6,6 +6,8 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\BahanBakuController;
 use App\Http\Controllers\JadwalProduksiController;
+use App\Http\Controllers\PerhitunganBOMController;
+
 
 Route::get('/', function () {
     return view('welcome');
@@ -34,4 +36,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::delete('/profile', [ProfileController::class, 'destroy'])
         ->name('profile.destroy');
+
+    //perhitunganBOM
+    Route::resource('perhitungan-bom', PerhitunganBOMController::class);
+
 });
