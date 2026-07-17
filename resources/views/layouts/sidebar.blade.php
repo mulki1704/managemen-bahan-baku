@@ -30,13 +30,13 @@
                 </svg>
                 <span>Bahan Baku</span>
             </a>
-            <div class="nav-item" data-page="bom">
+            <a href="{{ route('perhitungan-bom.index') }}"
+                class="nav-item {{ request()->routeIs('perhitungan-bom.*') ? 'active' : '' }}">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
-                    <rect x="3" y="3" width="18" height="18" rx="2" />
-                    <path d="M8 8h8M8 12h8M8 16h5" />
+                    <path d="M4 6h16M4 12h16M4 18h10" />
                 </svg>
-                Bill of Material
-            </div>
+                <span>Perhitungan BOM</span>
+            </a>
         </div>
 
         <div class="nav-group">

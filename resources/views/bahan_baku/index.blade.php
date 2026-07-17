@@ -86,7 +86,7 @@
                                 <a href="{{ route('bahan-baku.show', $item->id) }}" class="btn-detail">
                                     Detail
                                 </a>
-                                <a href="{{ route('bahan-baku.edit', $item->id) }}" class="btn-edit">
+                                <a href="{{ route('bahan-baku.edit', $item) }}" class="btn-edit">
                                     Edit
                                 </a>
                                 <form action="{{ route('bahan-baku.destroy', $item->id) }}" method="POST">
