@@ -1,120 +1,97 @@
 <?php
 namespace App\Http\Controllers;
 
-use App\Models\perhitunganBOM;
+use App\Models\PerhitunganBOM;
 use App\Models\BahanBaku;
 use Illuminate\Http\Request;
 
 class PerhitunganBOMController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+    public function index(Request $request)
     {
-        $bom = PerhitunganBOM::with('bahanBaku')->get();
+        $query = PerhitunganBOM::with('bahanBaku');
 
-return view('perhitungan_bom.index', compact('bom'));
+        if ($request->filled('search')) {
+            $search = $request->search;
+            $query->where(function ($q) use ($search) {
+                $q->where('kode_produk', 'like', "%{$search}%")
+                  ->orWhere('nama_produk', 'like', "%{$search}%");
+            });
+        }
 
+        $bom = $query->latest()->get();
+
+        return view('perhitungan_bom.index', compact('bom'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
         $bahan = BahanBaku::orderBy('nama_bahan')->get();
 
-return view('perhitungan_bom.create', compact('bahan'));
-
+        return view('perhitungan_bom.create', compact('bahan'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
-        $request->validate([
-
-            'kode_produk'    => 'required',
-
-            'nama_produk'    => 'required',
-
-            'kode_bahan'     => 'required',
-
-            'nama_bahan'     => 'required',
-
-            'kategori'       => 'required',
-
-            'qty_per_produk' => 'required|numeric',
-
-            'satuan'         => 'required',
-
-            'harga_satuan'   => 'required|numeric',
-
+        $validated = $request->validate([
+            'kode_produk'    => 'required|string|max:255',
+            'nama_produk'    => 'required|string|max:255',
+            'bahan_baku_id'  => 'required|exists:bahan_bakus,id',
+            'qty_per_produk' => 'required|numeric|min:0',
+            'waste'          => 'nullable|numeric|min:0|max:100',
+            'keterangan'     => 'nullable|string',
         ]);
 
-        $total =
-        $request->qty_per_produk *
-        $request->harga_satuan;
+        $validated['waste'] = $validated['waste'] ?? 0;
 
-        PerhitunganBOM::create([
-
-            'kode_produk'    => $request->kode_produk,
-
-            'nama_produk'    => $request->nama_produk,
-
-            'kode_bahan'     => $request->kode_bahan,
-
-            'nama_bahan'     => $request->nama_bahan,
-
-            'kategori'       => $request->kategori,
-
-            'qty_per_produk' => $request->qty_per_produk,
-
-            'satuan'         => $request->satuan,
-
-            'harga_satuan'   => $request->harga_satuan,
-
-            'total_biaya'    => $total,
-
-        ]);
+        PerhitunganBOM::create($validated);
 
         return redirect()
             ->route('perhitungan-bom.index')
-            ->with('success', 'Data berhasil ditambahkan.');
-
+            ->with('success', 'Data BOM berhasil ditambahkan.');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(perhitunganBOM $perhitunganBOM)
+    public function show(PerhitunganBOM $perhitunganBom)
     {
-        //
+        $perhitunganBom->load('bahanBaku');
+
+        return view('perhitungan_bom.show', compact('perhitunganBom'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(perhitunganBOM $perhitunganBOM)
+    public function edit(PerhitunganBOM $perhitunganBom)
     {
-        //
+        $bahan = BahanBaku::orderBy('nama_bahan')->get();
+        $perhitunganBom->load('bahanBaku');
+
+        return view('perhitungan_bom.edit', compact('perhitunganBom', 'bahan'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, perhitunganBOM $perhitunganBOM)
+    public function update(Request $request, PerhitunganBOM $perhitunganBom)
     {
-        //
+        $validated = $request->validate([
+            'kode_produk'    => 'required|string|max:255',
+            'nama_produk'    => 'required|string|max:255',
+            'bahan_baku_id'  => 'required|exists:bahan_bakus,id',
+            'qty_per_produk' => 'required|numeric|min:0',
+            'waste'          => 'nullable|numeric|min:0|max:100',
+            'keterangan'     => 'nullable|string',
+        ]);
+
+        $validated['waste'] = $validated['waste'] ?? 0;
+
+        $perhitunganBom->update($validated);
+
+        return redirect()
+            ->route('perhitungan-bom.index')
+            ->with('success', 'Data BOM berhasil diperbarui.');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(perhitunganBOM $perhitunganBOM)
+    public function destroy(PerhitunganBOM $perhitunganBom)
     {
-        //
+        $perhitunganBom->delete();
+
+        return redirect()
+            ->route('perhitungan-bom.index')
+            ->with('success', 'Data BOM berhasil dihapus.');
     }
 }

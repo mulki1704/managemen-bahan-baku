@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -19,11 +20,16 @@ class PerhitunganBOM extends Model
         'keterangan',
     ];
 
-    /**
-     * Relasi ke tabel bahan baku
-     */
     public function bahanBaku()
     {
         return $this->belongsTo(BahanBaku::class);
+    }
+
+    public function getTotalBiayaAttribute()
+    {
+        $harga = $this->bahanBaku->harga ?? 0;
+        $qty = $this->qty_per_produk ?? 0;
+        $waste = $this->waste ?? 0;
+        return ($qty + ($qty * $waste / 100)) * $harga;
     }
 }

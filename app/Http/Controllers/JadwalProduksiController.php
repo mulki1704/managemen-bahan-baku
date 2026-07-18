@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers;
 
 use App\Models\JadwalProduksi;
@@ -7,73 +6,84 @@ use Illuminate\Http\Request;
 
 class JadwalProduksiController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+    public function index(Request $request)
     {
-        $jadwalProduksis = JadwalProduksi::all();
+        $query = JadwalProduksi::query();
+
+        if ($request->filled('search')) {
+            $search = $request->search;
+            $query->where(function ($q) use ($search) {
+                $q->where('kode_jadwal', 'like', "%{$search}%")
+                  ->orWhere('catatan', 'like', "%{$search}%");
+            });
+        }
+
+        if ($request->filled('status')) {
+            $query->where('status', $request->status);
+        }
+
+        $jadwalProduksis = $query->latest()->get();
+
         return view('jadwal-produksi.index', compact('jadwalProduksis'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
         return view('jadwal-produksi.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
-        JadwalProduksi::create($request->all());
+        $validated = $request->validate([
+            'kode_jadwal'    => 'required|string|max:255|unique:jadwal_produksi,kode_jadwal',
+            'qty_produksi'   => 'required|integer|min:1',
+            'tanggal_mulai'  => 'required|date',
+            'tanggal_selesai' => 'required|date|after_or_equal:tanggal_mulai',
+            'status'         => 'required|in:Dijadwalkan,Berjalan,Selesai,Ditunda',
+            'catatan'        => 'nullable|string',
+        ]);
+
+        JadwalProduksi::create($validated);
 
         return redirect()
-        ->route('jadwal-produksi.index')
-        ->with('success', 'Jadwal Produksi berhasil ditambahkan.');
+            ->route('jadwal-produksi.index')
+            ->with('success', 'Jadwal produksi berhasil ditambahkan.');
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show(JadwalProduksi $jadwalProduksi)
     {
-        //
+        return view('jadwal-produksi.show', compact('jadwalProduksi'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit($id)
+    public function edit(JadwalProduksi $jadwalProduksi)
     {
-        $jadwal = JadwalProduksi::findOrFail(($id));
-        return view('jadwal-produksi.edit', compact('jadwal'));
+        return view('jadwal-produksi.edit', compact('jadwalProduksi'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, JadwalProduksi $jadwalProduksi)
     {
-        $jadwal = JadwalProduksi::findOrFail($jadwalProduksi->id);  
-        $jadwal->update($request->all());
+        $validated = $request->validate([
+            'kode_jadwal'    => 'required|string|max:255|unique:jadwal_produksi,kode_jadwal,' . $jadwalProduksi->id,
+            'qty_produksi'   => 'required|integer|min:1',
+            'tanggal_mulai'  => 'required|date',
+            'tanggal_selesai' => 'required|date|after_or_equal:tanggal_mulai',
+            'status'         => 'required|in:Dijadwalkan,Berjalan,Selesai,Ditunda',
+            'catatan'        => 'nullable|string',
+        ]);
+
+        $jadwalProduksi->update($validated);
+
         return redirect()
-        ->route('jadwal-produksi.index')
-        ->with('success', 'Jadwal Produksi berhasil diperbarui.');
+            ->route('jadwal-produksi.index')
+            ->with('success', 'Jadwal produksi berhasil diperbarui.');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(JadwalProduksi $jadwalProduksi)
     {
-        jadwalProduksi::destroy($jadwalProduksi->id);
-        
+        $jadwalProduksi->delete();
+
         return redirect()
-        ->route('jadwal-produksi.index')
-        ->with('success', 'Jadwal Produksi berhasil dihapus.');
+            ->route('jadwal-produksi.index')
+            ->with('success', 'Jadwal produksi berhasil dihapus.');
     }
 }
