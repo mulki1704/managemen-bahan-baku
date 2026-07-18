@@ -23,6 +23,8 @@
                 </svg>
                 <span>Dashboard</span>
             </a>
+
+            @if(in_array(Auth::user()->role, ['super_admin', 'admin_produksi', 'admin_marketing']))
             <a href="{{ route('bahan-baku.index') }}"
                 class="nav-item {{ request()->routeIs('bahan-baku.*') ? 'active' : '' }}">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
@@ -30,32 +32,23 @@
                 </svg>
                 <span>Bahan Baku</span>
             </a>
+            @endif
+
+            @if(in_array(Auth::user()->role, ['super_admin', 'admin_produksi', 'admin_marketing', 'staff_marketing']))
             <a href="{{ route('perhitungan-bom.index') }}"
                 class="nav-item {{ request()->routeIs('perhitungan-bom.*') ? 'active' : '' }}">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
-                    <path d="M4 6h16M4 12h16M4 18h10" />
+                    <path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/>
                 </svg>
                 <span>Perhitungan BOM</span>
             </a>
+            @endif
         </div>
 
         <div class="nav-group">
             <div class="nav-group-label">Perencanaan</div>
-            <div class="nav-item" data-page="mrp">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
-                    <path d="M3 17l5-5 4 4 8-8" />
-                    <path d="M14 8h6v6" />
-                </svg>
-                Perhitungan MRP
-            </div>
-            <div class="nav-item" data-page="po">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
-                    <path d="M6 3h9l5 5v13H6z" />
-                    <path d="M14 3v5h5" />
-                </svg>
-                Purchase Order
-            </div>
 
+            @if(in_array(Auth::user()->role, ['super_admin', 'admin_produksi', 'staff_produksi']))
             <a href="{{ route('jadwal-produksi.index') }}"
                 class="nav-item {{ request()->routeIs('jadwal-produksi.*') ? 'active' : '' }}">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
@@ -64,38 +57,56 @@
                 </svg>
                 <span>Jadwal Produksi</span>
             </a>
+            @endif
+
+            @if(Auth::user()->role === 'super_admin')
+            <div class="nav-item" data-page="mrp" style="opacity:0.5;cursor:default;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                    <path d="M3 17l5-5 4 4 8-8" />
+                    <path d="M14 8h6v6" />
+                </svg>
+                Perhitungan MRP
+                <span class="nav-badge">Soon</span>
+            </div>
+            <div class="nav-item" data-page="po" style="opacity:0.5;cursor:default;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                    <path d="M6 3h9l5 5v13H6z" />
+                    <path d="M14 3v5h5" />
+                </svg>
+                Purchase Order
+                <span class="nav-badge">Soon</span>
+            </div>
+            @endif
         </div>
 
+        @if(Auth::user()->role === 'super_admin')
         <div class="nav-group">
             <div class="nav-group-label">Sistem</div>
-            <div class="nav-item" data-page="laporan">
+            <a href="{{ route('kelola-user.index') }}"
+                class="nav-item {{ request()->routeIs('kelola-user.*') ? 'active' : '' }}">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                    <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/>
+                    <circle cx="9" cy="7" r="4"/>
+                    <path d="M23 21v-2a4 4 0 00-3-3.87"/>
+                    <path d="M16 3.13a4 4 0 010 7.75"/>
+                </svg>
+                <span>Kelola Akun</span>
+            </a>
+            <div class="nav-item" data-page="laporan" style="opacity:0.5;cursor:default;">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
                     <path d="M4 19V5M4 19h16M8 15v-4M12 15V8M16 15v-7" />
                 </svg>
                 Laporan
             </div>
-            <div class="nav-item" data-page="pengguna">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
-                    <circle cx="12" cy="8" r="3.2" />
-                    <path d="M5 20c1.5-4 5-5.5 7-5.5S17.5 16 19 20" />
-                </svg>
-                Pengguna &amp; Peran
-            </div>
-            <div class="nav-item" data-page="pengaturan">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
-                    <circle cx="12" cy="12" r="3" />
-                    <path
-                        d="M19.4 15a1.7 1.7 0 00.34 1.87l.06.06a2 2 0 11-2.83 2.83l-.06-.06a1.7 1.7 0 00-1.87-.34 1.7 1.7 0 00-1 1.55V21a2 2 0 11-4 0v-.09a1.7 1.7 0 00-1-1.55 1.7 1.7 0 00-1.87.34l-.06.06a2 2 0 11-2.83-2.83l.06-.06a1.7 1.7 0 00.34-1.87 1.7 1.7 0 00-1.55-1H3a2 2 0 110-4h.09a1.7 1.7 0 001.55-1 1.7 1.7 0 00-.34-1.87l-.06-.06a2 2 0 112.83-2.83l.06.06a1.7 1.7 0 001.87.34H9a1.7 1.7 0 001-1.55V3a2 2 0 114 0v.09a1.7 1.7 0 001 1.55 1.7 1.7 0 001.87-.34l.06-.06a2 2 0 112.83 2.83l-.06.06a1.7 1.7 0 00-.34 1.87V9a1.7 1.7 0 001.55 1H21a2 2 0 110 4h-.09a1.7 1.7 0 00-1.55 1z" />
-                </svg>
-                Pengaturan
-            </div>
         </div>
+        @endif
     </nav>
 
     <div class="sidebar-footer">
-        <div class="avatar">MA</div>
+        <div class="avatar">{{ Auth::user()->initials }}</div>
         <div class="user-meta">
-            <div class="u-role">Admin Produksi</div>
+            <div class="u-name">{{ Auth::user()->name }}</div>
+            <div class="u-role">{{ Auth::user()->role_label }}</div>
         </div>
     </div>
 </aside>

@@ -3,7 +3,8 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>@yield('title')</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>SIKERREL.ID - @yield('title', 'Dashboard')</title>
 
     @vite([
         'resources/css/dashboard.css',
@@ -25,10 +26,15 @@
 
     </div>
 
-
-
-    
 </div>
+
+@stack('scripts')
+
+<script>
+document.getElementById('hamburgerBtn')?.addEventListener('click', () => {
+    document.getElementById('sidebar').classList.toggle('open');
+});
+</script>
 
 </body>
 </html>

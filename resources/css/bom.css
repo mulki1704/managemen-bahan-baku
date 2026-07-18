@@ -411,6 +411,184 @@ FORM
 
 }
 
+/* ===========================
+   ALERT BOX
+=========================== */
+
+.alert-box {
+
+    padding: 14px 20px;
+
+    border-radius: 10px;
+
+    margin-bottom: 20px;
+
+    font-size: 14px;
+
+}
+
+.alert-success {
+
+    background: #E3EFE8;
+
+    border: 1px solid #B8D9C5;
+
+    color: #3F7A5C;
+
+}
+
+.alert-error {
+
+    background: #FBE6E0;
+
+    border: 1px solid #F5C6BE;
+
+    color: #B9432F;
+
+}
+
+.alert-error ul {
+
+    margin: 0;
+
+    padding-left: 18px;
+
+}
+
+.empty {
+
+    text-align: center;
+
+    color: #999;
+
+    padding: 40px !important;
+
+    font-style: italic;
+
+}
+
+/* ===========================
+   TOPBAR ACTIONS
+=========================== */
+
+.topbar-actions {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 14px;
+
+    margin-left: auto;
+
+}
+
+.topbar-right {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+}
+
+/* ===========================
+   TEXTAREA
+=========================== */
+
+textarea {
+
+    width: 100%;
+
+    border: 1px solid #ddd;
+
+    border-radius: 10px;
+
+    padding: 12px 15px;
+
+    font-size: 14px;
+
+    font-family: 'Inter', sans-serif;
+
+    outline: none;
+
+    resize: vertical;
+
+}
+
+textarea:focus {
+
+    border-color: #1E2A47;
+
+}
+
+/* ===========================
+   INFO CARD (BOM form)
+=========================== */
+
+.info-card {
+
+    background: #F6F4EF;
+
+    border: 1px dashed var(--stitch, #DED8C9);
+
+    border-radius: 10px;
+
+    padding: 16px 20px;
+
+    display: flex;
+
+    gap: 24px;
+
+    flex-wrap: wrap;
+
+}
+
+.info-row {
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 4px;
+
+}
+
+.info-label {
+
+    font-size: 11px;
+
+    font-weight: 600;
+
+    color: #888;
+
+    text-transform: uppercase;
+
+    letter-spacing: 0.5px;
+
+}
+
+.info-value {
+
+    font-size: 14px;
+
+    font-weight: 600;
+
+    color: #1E2A47;
+
+}
+
+.total-highlight {
+
+    font-size: 20px;
+
+    color: var(--thread, #C1652F) !important;
+
+    font-weight: 700 !important;
+
+}
+
 .detail-grid {
 
     display: grid;

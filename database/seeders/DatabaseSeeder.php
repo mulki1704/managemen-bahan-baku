@@ -2,21 +2,34 @@
 
 namespace Database\Seeders;
 
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\DB;
 
 class DatabaseSeeder extends Seeder
 {
-    /**
-     * Seed the application's database.
-     */
     public function run(): void
     {
-        // \App\Models\User::factory(10)->create();
+        $roles = [
+            ['name' => 'Super Admin',   'email' => 'superadmin@sikerrel.id', 'role' => 'super_admin'],
+            ['name' => 'Admin Produksi','email' => 'admin.produksi@sikerrel.id', 'role' => 'admin_produksi'],
+            ['name' => 'Staff Produksi','email' => 'staff.produksi@sikerrel.id', 'role' => 'staff_produksi'],
+            ['name' => 'Admin Marketing','email' => 'admin.marketing@sikerrel.id', 'role' => 'admin_marketing'],
+            ['name' => 'Staff Marketing','email' => 'staff.marketing@sikerrel.id', 'role' => 'staff_marketing'],
+        ];
 
-        // \App\Models\User::factory()->create([
-        //     'name' => 'Test User',
-        //     'email' => 'test@example.com',
-        // ]);
+        foreach ($roles as $user) {
+            DB::table('users')->updateOrInsert(
+                ['email' => $user['email']],
+                [
+                    'name'              => $user['name'],
+                    'role'              => $user['role'],
+                    'password'          => Hash::make('password'),
+                    'email_verified_at' => now(),
+                    'created_at'        => now(),
+                    'updated_at'        => now(),
+                ]
+            );
+        }
     }
 }

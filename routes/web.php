@@ -1,33 +1,33 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\BahanBakuController;
 use App\Http\Controllers\JadwalProduksiController;
 use App\Http\Controllers\PerhitunganBOMController;
-
+use App\Http\Controllers\KelolaUserController;
 
 Route::get('/', function () {
-    return view('welcome');
+    if (Auth::check()) {
+        return redirect()->route('dashboard');
+    }
+    return redirect()->route('login');
 });
 
 require __DIR__.'/auth.php';
 
 Route::middleware(['auth', 'verified'])->group(function () {
 
-    // Dashboard
     Route::get('/dashboard', [DashboardController::class, 'index'])
         ->name('dashboard');
 
-    // Bahan Baku
     Route::resource('bahan-baku', BahanBakuController::class);
 
-    // Jadwal Produksi
     Route::resource('jadwal-produksi', JadwalProduksiController::class);
 
-    // Profile
     Route::get('/profile', [ProfileController::class, 'edit'])
         ->name('profile.edit');
 
@@ -37,7 +37,11 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])
         ->name('profile.destroy');
 
-    //perhitunganBOM
     Route::resource('perhitungan-bom', PerhitunganBOMController::class);
+
+    Route::middleware(\App\Http\Middleware\SuperAdmin::class)->group(function () {
+        Route::resource('kelola-user', KelolaUserController::class)
+            ->parameters(['kelola-user' => 'user']);
+    });
 
 });
